@@ -2,45 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Govt Job AutoFill Pro</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
-  margin: 0;
-  padding: 20px;
-}
-header {
-  background: #123b70;
-  color: white;
-  padding: 22px;
-  border-radius: 12px;
-  text-align: center;
-}
-.card {
-  background: white;
-  padding: 18px;
-  margin-top: 18px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px #0001;
-}
-input, button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 9px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  border-radius: 7px;
-}
-input { border: 1px solid #ccc; }
-button {
-  background: #123b70;
-  color: white;
-  border: 0;
-  font-size: 16px;
-}
-small { color: #555; }
+body{font-family:Arial;background:#f1f5f9;margin:0;padding:16px}
+header{background:#123b70;color:white;padding:20px;text-align:center;border-radius:12px}
+.card{background:white;padding:18px;margin-top:16px;border-radius:12px}
+input,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
+input{border:1px solid #bbb;border-radius:7px}
+button{background:#123b70;color:white;border:0;border-radius:7px;font-size:16px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -52,70 +23,66 @@ small { color: #555; }
 
 <div class="card">
 <h3>Candidate Profile</h3>
-<input id="name" placeholder="Candidate Name">
+<input id="name" placeholder="Full Name">
 <input id="father" placeholder="Father Name">
 <input id="dob" type="date">
 <input id="mobile" placeholder="Mobile Number">
 <input id="email" type="email" placeholder="Email">
 <input id="category" placeholder="Category">
 <input id="qualification" placeholder="Qualification">
-
-<button onclick="saveProfile()">Save Profile</button>
-<small id="status">Profile not saved</small>
+<button onclick="save()">Save / Update Profile</button>
+<p id="status">Profile not saved</p>
 </div>
 
 <div class="card">
 <h3>Upload Documents</h3>
 <input type="file" id="documents" multiple>
-<p id="files">No documents selected</p>
+<p id="files">No files selected</p>
 </div>
 
 <div class="card">
-<h3>Job Form Assistant</h3>
-<input id="job" placeholder="Job Name (SSC, Railway, Punjab Police)">
-<button onclick="prepare()">Prepare Form Details</button>
-<p id="result">Your details will appear here.</p>
+<h3>Government Job Form</h3>
+<input id="job" placeholder="Enter Job Name">
+<button onclick="prepare()">Prepare Details</button>
+<pre id="result"></pre>
 </div>
 
 <div class="card">
-<h3>Final Control</h3>
-<p>Automatic submission is disabled.</p>
-<button disabled>Auto Submit OFF</button>
+<h3>Final Submission Control</h3>
+<p>Automatic submission: OFF</p>
+<button disabled>Auto Submit Disabled</button>
 </div>
 
 <script>
-function saveProfile() {
- const fields = [
-  "name","father","dob","mobile",
-  "email","category","qualification"
- ];
- const data = {};
- fields.forEach(id => {
-  data[id] = document.getElementById(id).value;
- });
+const ids=["name","father","dob","mobile","email","category","qualification"];
+
+function save(){
+ let data={};
+ ids.forEach(id=>data[id]=document.getElementById(id).value);
  localStorage.setItem("candidateProfile",JSON.stringify(data));
- document.getElementById("status").innerText =
- "Profile saved on this device!";
+ document.getElementById("status").innerText="Profile saved successfully!";
 }
 
-function prepare() {
- const fields = [
-  "name","father","dob","mobile",
-  "email","category","qualification"
- ];
- const data = {};
- fields.forEach(id => {
-  data[id] = document.getElementById(id).value;
+function load(){
+ let data=JSON.parse(localStorage.getItem("candidateProfile")||"{}");
+ ids.forEach(id=>{
+ document.getElementById(id).value=data[id]||"";
  });
- document.getElementById("result").innerText =
- JSON.stringify(data,null,2);
 }
 
-document.getElementById("documents").onchange = function() {
- document.getElementById("files").innerText =
- this.files.length + " documents selected";
-};
-</script>
+function prepare(){
+ let data={};
+ ids.forEach(id=>data[id]=document.getElementById(id).value);
+ document.getElementById("result").textContent=
+ JSON.stringify({job:document.getElementById("job").value,details:data},null,2);
+}
 
+document.getElementById("documents").onchange=function(){
+ document.getElementById("files").innerText=
+ this.files.length+" files selected (not uploaded or saved)";
+};
+
+load();
+</script>
 </body>
 </html>
