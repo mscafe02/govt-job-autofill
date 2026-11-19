@@ -5,394 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123b70">
 <title>Govt Job AutoFill Pro</title>
-
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f5f9;
- color:#172033;
-}
-header{
- background:#123b70;
- color:white;
- padding:24px 12px;
- text-align:center;
-}
-header h1{margin:0;font-size:25px}
-header p{margin:8px 0 0}
-nav{
- display:flex;
- flex-wrap:wrap;
- gap:6px;
- padding:12px;
- background:white;
-}
-button{
- background:#123b70;
- color:white;
- border:0;
- padding:12px;
- border-radius:7px;
- cursor:pointer;
- font-size:14px;
-}
-nav button{flex:1}
-.container{
- max-width:900px;
- margin:auto;
- padding:12px;
-}
-.card{
- background:white;
- padding:18px;
- margin:14px 0;
- border-radius:12px;
- box-shadow:0 2px 8px #0001;
-}
-h2{color:#123b70;font-size:20px}
-input,select,textarea{
- width:100%;
- padding:12px;
- margin:7px 0 14px;
- border:1px solid #ccd3df;
- border-radius:7px;
- font-size:15px;
-}
-label{font-weight:bold;font-size:14px}
-.green{background:#16834a}
-.red{background:#b42318}
-.gray{background:#64748b}
-.status{
- padding:12px;
- background:#e0f2fe;
- border-radius:7px;
- margin:10px 0;
-}
-.success{background:#dcfce7;color:#166534}
-.error{background:#fee2e2;color:#991b1b}
-.hidden{display:none!important}
-pre{
- white-space:pre-wrap;
- overflow-wrap:anywhere;
- background:#f1f5f9;
- padding:12px;
- border-radius:7px;
-}
-.job{
- padding:12px;
- border:1px solid #ddd;
- border-radius:8px;
- margin:10px 0;
-}
-footer{
- text-align:center;
- padding:20px;
- color:#64748b;
-}
-@media(max-width:550px){
- header h1{font-size:21px}
- nav button{font-size:12px;padding:10px 5px}
-}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}header{background:#123b70;color:#fff;padding:24px 12px;text-align:center}header h1{margin:0;font-size:25px}header p{margin:8px 0 0}nav{display:flex;flex-wrap:wrap;gap:6px;padding:12px;background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px #0001}button{background:#123b70;color:#fff;border:0;padding:12px;border-radius:7px;cursor:pointer;font-size:14px}button:hover{filter:brightness(1.12)}nav button{flex:1;min-width:75px}.container{max-width:900px;margin:auto;padding:12px}.card{background:#fff;padding:18px;margin:14px 0;border-radius:12px;box-shadow:0 2px 8px #0001}h2{color:#123b70;font-size:20px}input,select,textarea{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #ccd3df;border-radius:7px;font-size:15px}label{font-weight:bold;font-size:14px}.green{background:#16834a}.red{background:#b42318}.gray{background:#64748b}.status{padding:12px;background:#e0f2fe;border-radius:7px;margin:10px 0}.success{background:#dcfce7;color:#166534}.error{background:#fee2e2;color:#991b1b}.hidden{display:none!important}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f1f5f9;padding:12px;border-radius:7px}.job{padding:12px;border:1px solid #ddd;border-radius:8px;margin:10px 0}.job a{display:inline-block;margin:5px 8px 0 0}footer{text-align:center;padding:20px;color:#64748b}@media(max-width:550px){header h1{font-size:21px}nav button{font-size:12px;padding:10px 5px}}
 </style>
 </head>
-
 <body>
-
-<header>
-<h1>GOVT JOB AUTOFILL PRO</h1>
-<p>Your Documents • Your Control</p>
-</header>
-
+<header><h1>GOVT JOB AUTOFILL PRO</h1><p>Your Documents • Your Control</p></header>
 <nav>
-<button onclick="show('dashboard')">Home</button>
-<button onclick="show('profile')">Profile</button>
-<button onclick="show('documents')">Documents</button>
-<button onclick="show('jobs')">Jobs</button>
-<button onclick="show('backup')">Backup</button>
+<button type="button" onclick="show('dashboard')">Home</button>
+<button type="button" onclick="show('profile')">Profile</button>
+<button type="button" onclick="show('documents')">Documents</button>
+<button type="button" onclick="show('jobs')">Jobs</button>
+<button type="button" onclick="show('backup')">Backup</button>
 </nav>
-
 <div class="container">
-
 <section id="dashboard">
-<div class="card">
-<h2>Welcome to Your App</h2>
-<p>Manage your government job applications in one place.</p>
-<div class="status">
-Profile: <b id="profileStatusHome">Not Saved</b>
-</div>
-<div class="status">
-Applications: <b id="jobCount">0</b>
-</div>
-<button onclick="show('profile')">Open My Profile</button>
-</div>
-
-<div class="card">
-<h2>Important</h2>
-<p>Automatic submission is disabled. You will always control the final submission.</p>
-</div>
+<div class="card"><h2>Welcome to Your App</h2><p>Manage your government job applications in one place.</p><div class="status">Profile: <b id="profileStatusHome">Not Saved</b></div><div class="status">Applications: <b id="jobCount">0</b></div><button type="button" onclick="show('profile')">Open My Profile</button></div>
+<div class="card"><h2>Important</h2><p>Automatic submission is disabled. You will always control the final submission.</p></div>
 </section>
-
-<section id="profile" class="hidden">
-<div class="card">
-<h2>Candidate Profile</h2>
-
-<label>Full Name *</label>
-<input id="name" placeholder="Full Name">
-
-<label>Father Name</label>
-<input id="father" placeholder="Father Name">
-
-<label>Mother Name</label>
-<input id="mother" placeholder="Mother Name">
-
-<label>Date of Birth *</label>
-<input id="dob" type="date">
-
-<label>Mobile Number *</label>
-<input id="mobile" type="tel" maxlength="10" placeholder="Mobile Number">
-
-<label>Email</label>
-<input id="email" type="email" placeholder="Email">
-
-<label>Gender</label>
-<select id="gender">
-<option value="">Select Gender</option>
-<option>Male</option>
-<option>Female</option>
-<option>Other</option>
-</select>
-
-<label>Category</label>
-<select id="category">
-<option value="">Select Category</option>
-<option>General</option>
-<option>SC</option>
-<option>ST</option>
-<option>OBC</option>
-<option>EWS</option>
-<option>Other</option>
-</select>
-
-<label>Qualification</label>
-<select id="qualification">
-<option value="">Select Qualification</option>
-<option>10th</option>
-<option>12th</option>
-<option>ITI</option>
-<option>Diploma</option>
-<option>Graduation</option>
-<option>Post Graduation</option>
-</select>
-
-<label>State</label>
-<input id="state" placeholder="State">
-
-<label>District</label>
-<input id="district" placeholder="District">
-
-<label>Address</label>
-<textarea id="address" placeholder="Full Address"></textarea>
-
-<button class="green" onclick="saveProfile()">SAVE PROFILE</button>
-<button class="gray" onclick="loadProfile()">LOAD PROFILE</button>
-
-<p id="saveStatus" class="status">Profile not saved.</p>
+<section id="profile" class="hidden"><div class="card"><h2>Candidate Profile</h2>
+<label>Full Name *</label><input id="name" autocomplete="name" placeholder="Full Name">
+<label>Father Name</label><input id="father" placeholder="Father Name">
+<label>Mother Name</label><input id="mother" placeholder="Mother Name">
+<label>Date of Birth *</label><input id="dob" type="date">
+<label>Mobile Number *</label><input id="mobile" type="tel" maxlength="10" inputmode="numeric" placeholder="Mobile Number">
+<label>Email</label><input id="email" type="email" placeholder="Email">
+<label>Gender</label><select id="gender"><option value="">Select Gender</option><option>Male</option><option>Female</option><option>Other</option></select>
+<label>Category</label><select id="category"><option value="">Select Category</option><option>General</option><option>SC</option><option>ST</option><option>OBC</option><option>EWS</option><option>Other</option></select>
+<label>Qualification</label><select id="qualification"><option value="">Select Qualification</option><option>10th</option><option>12th</option><option>ITI</option><option>Diploma</option><option>Graduation</option><option>Post Graduation</option></select>
+<label>State</label><input id="state" placeholder="State"><label>District</label><input id="district" placeholder="District"><label>Address</label><textarea id="address" placeholder="Full Address"></textarea>
+<button type="button" class="green" onclick="saveProfile()">SAVE PROFILE</button><button type="button" class="gray" onclick="loadProfile()">LOAD PROFILE</button><p id="saveStatus" class="status" aria-live="polite">Profile not saved.</p>
+</div></section>
+<section id="documents" class="hidden"><div class="card"><h2>Document Manager</h2><p>Select documents for reference. Files stay on your device and are not uploaded to a server. Re-select them when you reopen the app.</p>
+<label>Photo</label><input type="file" id="photo" accept="image/*"><label>Signature</label><input type="file" id="signature" accept="image/*"><label>10th Marksheet</label><input type="file" id="marks10" accept="image/*,.pdf"><label>12th Marksheet</label><input type="file" id="marks12" accept="image/*,.pdf"><label>Category Certificate</label><input type="file" id="certificate" accept="image/*,.pdf"><p id="docStatus" class="status" aria-live="polite">No documents selected.</p></div></section>
+<section id="jobs" class="hidden"><div class="card"><h2>Government Job Tracker</h2>
+<label>Department</label><select id="jobType"><option value="">Select Job</option><option>SSC</option><option>Railway</option><option>Punjab Police</option><option>Punjab Government</option><option>UPSC</option><option>Army</option><option>Banking</option><option>Other</option></select>
+<label>Post Name</label><input id="post" placeholder="Post Name"><label>Last Date</label><input id="lastDate" type="date"><label>Official Website</label><input id="jobUrl" type="url" placeholder="https://..."><button type="button" onclick="addJob()">ADD JOB</button><p id="jobStatus" class="status" aria-live="polite"></p><div id="jobList"></div></div>
+<div class="card"><h2>Form Details Preview</h2><input id="formJob" placeholder="Job Name"><button type="button" onclick="prepareForm()">PREPARE DETAILS</button><pre id="preview">No details prepared.</pre><button type="button" onclick="copyPreview()">COPY DETAILS</button></div></section>
+<section id="backup" class="hidden"><div class="card"><h2>Backup &amp; Restore</h2><p>Backup contains profile and saved job tracker entries only. It does not include selected document files.</p><button type="button" onclick="downloadBackup()">DOWNLOAD BACKUP</button><label>Restore Backup</label><input type="file" id="restoreFile" accept=".json,application/json"><button type="button" onclick="restoreBackup()">RESTORE BACKUP</button><p id="backupStatus" class="status" aria-live="polite"></p></div></section>
 </div>
-</section>
-
-<section id="documents" class="hidden">
-<div class="card">
-<h2>Document Manager</h2>
-<p>Select documents for reference. Files are not uploaded to a server in this version.</p>
-
-<label>Photo</label>
-<input type="file" id="photo" accept="image/*">
-
-<label>Signature</label>
-<input type="file" id="signature" accept="image/*">
-
-<label>10th Marksheet</label>
-<input type="file" id="marks10" accept="image/*,.pdf">
-
-<label>12th Marksheet</label>
-<input type="file" id="marks12" accept="image/*,.pdf">
-
-<label>Category Certificate</label>
-<input type="file" id="certificate" accept="image/*,.pdf">
-
-<p id="docStatus" class="status">No documents selected.</p>
-</div>
-</section>
-
-<section id="jobs" class="hidden">
-<div class="card">
-<h2>Government Job Tracker</h2>
-
-<label>Department</label>
-<select id="jobType">
-<option value="">Select Job</option>
-<option>SSC</option>
-<option>Railway</option>
-<option>Punjab Police</option>
-<option>Punjab Government</option>
-<option>UPSC</option>
-<option>Army</option>
-<option>Banking</option>
-<option>Other</option>
-</select>
-
-<label>Post Name</label>
-<input id="post" placeholder="Post Name">
-
-<label>Last Date</label>
-<input id="lastDate" type="date">
-
-<label>Official Website</label>
-<input id="jobUrl" type="url" placeholder="Official URL">
-
-<button onclick="addJob()">ADD JOB</button>
-<p id="jobStatus" class="status"></p>
-<div id="jobList"></div>
-</div>
-
-<div class="card">
-<h2>Form Details Preview</h2>
-<input id="formJob" placeholder="Job Name">
-<button onclick="prepareForm()">PREPARE DETAILS</button>
-<pre id="preview">No details prepared.</pre>
-<button onclick="copyPreview()">COPY DETAILS</button>
-</div>
-</section>
-
-<section id="backup" class="hidden">
-<div class="card">
-<h2>Backup & Restore</h2>
-<button onclick="downloadBackup()">DOWNLOAD BACKUP</button>
-<label>Restore Backup</label>
-<input type="file" id="restoreFile" accept=".json">
-<button onclick="restoreBackup()">RESTORE BACKUP</button>
-<p id="backupStatus" class="status"></p>
-</div>
-</section>
-
-</div>
-
 <footer>Govt Job AutoFill Pro • Manual Submission Only</footer>
-
 <script>
-// PAGE NAVIGATION
-function show(page){
- document.querySelectorAll("section").forEach(s=>{
-  s.classList.add("hidden");
- });
- document.getElementById(page).classList.remove("hidden");
-}
-
-// PROFILE SAVE
-function saveProfile(){
- const ids=[
- "name","father","mother","dob","mobile","email",
- "gender","category","qualification","state",
- "district","address"
- ];
-
- let profile={};
-
- ids.forEach(id=>{
-  profile[id]=document.getElementById(id).value;
- });
-
- if(!profile.name || !profile.dob || !profile.mobile){
-  alert("Please fill Name, DOB and Mobile Number");
-  return;
- }
-
- localStorage.setItem("candidateProfile",JSON.stringify(profile));
-
- document.getElementById("saveStatus").innerText="Profile Saved Successfully!";
- document.getElementById("saveStatus").className="status success";
-
- document.getElementById("profileStatusHome").innerText="Saved";
-}
-
-// PROFILE LOAD
-function loadProfile(){
- const data=localStorage.getItem("candidateProfile");
-
- if(!data){
-  alert("No Saved Profile Found");
-  return;
- }
-
- const profile=JSON.parse(data);
-
- Object.keys(profile).forEach(id=>{
-  if(document.getElementById(id)){
-   document.getElementById(id).value=profile[id];
-  }
- });
-
- alert("Profile Loaded Successfully");
-}
-
-// JOB TRACKER
-function addJob(){
- const type=document.getElementById("jobType").value;
- const post=document.getElementById("post").value;
- const date=document.getElementById("lastDate").value;
- const url=document.getElementById("jobUrl").value;
-
- if(!type || !post){
-  alert("Please select Department and Post Name");
-  return;
- }
-
- let jobs=JSON.parse(localStorage.getItem("jobs")||"[]");
-
- jobs.push({
-  id:Date.now(),
-  type,
-  post,
-  date,
-  url
- });
-
- localStorage.setItem("jobs",JSON.stringify(jobs));
-
- document.getElementById("jobStatus").innerText="Job Added Successfully!";
- document.getElementById("post").value="";
- document.getElementById("lastDate").value="";
- document.getElementById("jobUrl").value="";
-
- displayJobs();
-}
-
-// DISPLAY JOBS
-function displayJobs(){
- const jobs=JSON.parse(localStorage.getItem("jobs")||"[]");
- const list=document.getElementById("jobList");
-
- list.innerHTML="";
-
- jobs.forEach(job=>{
-  const div=document.createElement("div");
-  div.className="job";
-
-  const heading=document.createElement("h3");
-  heading.textContent=job.post;
-
-  const department=document.createElement("p");
-  department.textContent="Department: "+job.type;
-
-  const deadline=document.createElement("p");
-  deadline.textContent="Last Date: "+(job.date||"Not Added");
-
-  div.append(heading,department,deadline);
-
-  if(job.url){
-   const link=document.createElement("a");
-   link.href=job.url;
-   link.target="_blank";
-   link.rel="</body>
+"use strict";
+const PROFILE_FIELDS=["name","father","mother","dob","mobile","email","gender","category","qualification","state","district","address"];
+function show(page){const target=document.getElementById(page);if(!target)return;document.querySelectorAll("main section, .container > section").forEach(s=>s.classList.add("hidden"));target.classList.remove("hidden");if(page==="jobs")displayJobs();}
+function readProfile(){const p={};PROFILE_FIELDS.forEach(id=>p[id]=document.getElementById(id).value.trim());return p;}
+function saveProfile(){const profile=readProfile();if(!profile.name||!profile.dob||!profile.mobile){alert("Please fill Name, DOB and Mobile Number");return;}if(!/^\d{10}$/.test(profile.mobile)){alert("Please enter a valid 10-digit mobile number");return;}try{localStorage.setItem("candidateProfile",JSON.stringify(profile));document.getElementById("saveStatus").textContent="Profile saved successfully!";document.getElementById("saveStatus").className="status success";document.getElementById("profileStatusHome").textContent="Saved";}catch(e){alert("Could not save profile in this browser.");}}
+function loadProfile(){try{const data=localStorage.getItem("candidateProfile");if(!data){alert("No saved profile found");return;}const p=JSON.parse(data);PROFILE_FIELDS.forEach(id=>{document.getElementById(id).value=p[id]||"";});document.getElementById("saveStatus").textContent="Profile loaded.";document.getElementById("profileStatusHome").textContent="Saved";}catch(e){alert("Saved profile could not be read.");}}
+function getJobs(){try{const value=JSON.parse(localStorage.getItem("jobs")||"[]");return Array.isArray(value)?value:[];}catch(e){return [];}}
+function addJob(){const type=document.getElementById("jobType").value,post=document.getElementById("post").value.trim(),date=document.getElementById("lastDate").value,url=document.getElementById("jobUrl").value.trim();if(!type||!post){alert("Please select Department and enter Post Name");return;}if(url){try{const u=new URL(url);if(!["http:","https:"].includes(u.protocol))throw new Error();}catch(e){alert("Please enter a valid website URL starting with https://");return;}}const jobs=getJobs();jobs.push({id:Date.now(),type,post,date,url});localStorage.setItem("jobs",JSON.stringify(jobs));document.getElementById("jobStatus").textContent="Job added successfully!";document.getElementById("post").value="";document.getElementById("lastDate").value="";document.getElementById("jobUrl").value="";displayJobs();}
+function deleteJob(id){const jobs=getJobs().filter(j=>String(j.id)!==String(id));localStorage.setItem("jobs",JSON.stringify(jobs));displayJobs();}
+function displayJobs(){const jobs=getJobs(),list=document.getElementById("jobList");list.replaceChildren();document.getElementById("jobCount").textContent=String(jobs.length);jobs.forEach(job=>{const div=document.createElement("div");div.className="job";const h=document.createElement("h3");h.textContent=job.post||"Untitled post";const p=document.createElement("p");p.textContent="Department: "+(job.type||"Not added")+" • Last Date: "+(job.date||"Not added");div.append(h,p);if(job.url){const a=document.createElement("a");a.href=job.url;a.target="_blank";a.rel="noopener noreferrer";a.textContent="Official Website";div.append(a);}const del=document.createElement("button");del.type="button";del.className="red";del.textContent="Delete";del.onclick=()=>deleteJob(job.id);div.append(del);list.append(div);});}
+function prepareForm(){const profile=readProfile();const saved=localStorage.getItem("candidateProfile");const p=saved?JSON.parse(saved):profile;const job=document.getElementById("formJob").value.trim()||"Not specified";const lines=["JOB APPLICATION DETAILS","Job: "+job,...PROFILE_FIELDS.map(id=>id.charAt(0).toUpperCase()+id.slice(1)+": "+(p[id]||"Not provided")),"","Please verify every detail on the official application form before submission."];document.getElementById("preview").textContent=lines.join("\n");}
+async function copyPreview(){const text=document.getElementById("preview").textContent;if(!text||text==="No details prepared."){alert("Please prepare details first");return;}try{await navigator.clipboard.writeText(text);alert("Details copied");}catch(e){const area=document.createElement("textarea");area.value=text;document.body.append(area);area.select();const ok=document.execCommand("copy");area.remove();alert(ok?"Details copied":"Copy not supported. Please select and copy the preview.");}}
+function downloadBackup(){const data={version:1,profile:localStorage.getItem("candidateProfile")?JSON.parse(localStorage.getItem("candidateProfile")):null,jobs:getJobs()};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="govt-job-autofill-backup.json";document.body.append(a);a.click();a.remove();URL.revokeObjectURL(url);document.getElementById("backupStatus").textContent="Backup downloaded.";}
+function restoreBackup(){const file=document.getElementById("restoreFile").files[0];if(!file){alert("Please select a backup JSON file");return;}const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data||typeof data!=="object"||(!data.profile&&!Array.isArray(data.jobs)))throw new Error("Invalid backup");if(data.profile){const p={};PROFILE_FIELDS.forEach(id=>p[id]=String(data.profile[id]||""));localStorage.setItem("candidateProfile",JSON.stringify(p));}if(Array.isArray(data.jobs)){const safe=data.jobs.filter(j=>j&&typeof j==="object"&&typeof j.post==="string").map((j,i)=>({id:j.id||Date.now()+i,type:String(j.type||""),post:j.post,date:String(j.date||""),url:String(j.url||"")}));localStorage.setItem("jobs",JSON.stringify(safe));}document.getElementById("backupStatus").textContent="Backup restored successfully.";document.getElementById("backupStatus").className="status success";loadProfileStatus();displayJobs();}catch(e){document.getElementById("backupStatus").textContent="Invalid backup file. Nothing was restored.";document.getElementById("backupStatus").className="status error";}};reader.readAsText(file);}
+function loadProfileStatus(){if(localStorage.getItem("candidateProfile"))document.getElementById("profileStatusHome").textContent="Saved";}
+document.addEventListener("DOMContentLoaded",()=>{loadProfileStatus();displayJobs();["photo","signature","marks10","marks12","certificate"].forEach(id=>document.getElementById(id).addEventListener("change",()=>{const chosen=["photo","signature","marks10","marks12","certificate"].filter(x=>document.getElementById(x).files.length).map(x=>x+": "+document.getElementById(x).files[0].name);document.getElementById("docStatus").textContent=chosen.length?chosen.join(" | "):"No documents selected.";}));});
+</script>
+</body>
+</html>
