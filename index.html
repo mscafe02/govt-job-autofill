@@ -2,114 +2,283 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b70">
 <title>Govt Job AutoFill Pro</title>
+
 <style>
-body{font-family:Arial;background:#f1f5f9;margin:0;padding:16px}
-header{background:#123b70;color:white;padding:20px;text-align:center;border-radius:12px}
-.card{background:white;padding:18px;margin-top:16px;border-radius:12px}
-input,button{width:100%;padding:12px;margin:8px 0;box-sizing:border-box}
-input{border:1px solid #bbb;border-radius:7px}
-button{background:#123b70;color:white;border:0;border-radius:7px;font-size:16px}
-pre{white-space:pre-wrap;overflow-wrap:anywhere}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f1f5f9;
+ color:#172033;
+}
+header{
+ background:#123b70;
+ color:white;
+ padding:24px 12px;
+ text-align:center;
+}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0}
+nav{
+ display:flex;
+ flex-wrap:wrap;
+ gap:6px;
+ padding:12px;
+ background:white;
+}
+button{
+ background:#123b70;
+ color:white;
+ border:0;
+ padding:12px;
+ border-radius:7px;
+ cursor:pointer;
+ font-size:14px;
+}
+nav button{flex:1}
+.container{
+ max-width:900px;
+ margin:auto;
+ padding:12px;
+}
+.card{
+ background:white;
+ padding:18px;
+ margin:14px 0;
+ border-radius:12px;
+ box-shadow:0 2px 8px #0001;
+}
+h2{color:#123b70;font-size:20px}
+input,select,textarea{
+ width:100%;
+ padding:12px;
+ margin:7px 0 14px;
+ border:1px solid #ccd3df;
+ border-radius:7px;
+ font-size:15px;
+}
+label{font-weight:bold;font-size:14px}
+.green{background:#16834a}
+.red{background:#b42318}
+.gray{background:#64748b}
+.status{
+ padding:12px;
+ background:#e0f2fe;
+ border-radius:7px;
+ margin:10px 0;
+}
+.success{background:#dcfce7;color:#166534}
+.error{background:#fee2e2;color:#991b1b}
+.hidden{display:none!important}
+pre{
+ white-space:pre-wrap;
+ overflow-wrap:anywhere;
+ background:#f1f5f9;
+ padding:12px;
+ border-radius:7px;
+}
+.job{
+ padding:12px;
+ border:1px solid #ddd;
+ border-radius:8px;
+ margin:10px 0;
+}
+footer{
+ text-align:center;
+ padding:20px;
+ color:#64748b;
+}
+@media(max-width:550px){
+ header h1{font-size:21px}
+ nav button{font-size:12px;padding:10px 5px}
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h2>Govt Job AutoFill Pro</h2>
+<h1>GOVT JOB AUTOFILL PRO</h1>
 <p>Your Documents • Your Control</p>
 </header>
 
+<nav>
+<button onclick="show('dashboard')">Home</button>
+<button onclick="show('profile')">Profile</button>
+<button onclick="show('documents')">Documents</button>
+<button onclick="show('jobs')">Jobs</button>
+<button onclick="show('backup')">Backup</button>
+</nav>
+
+<div class="container">
+
+<section id="dashboard">
 <div class="card">
-<h3>Candidate Profile</h3>
+<h2>Welcome to Your App</h2>
+<p>Manage your government job applications in one place.</p>
+<div class="status">
+Profile: <b id="profileStatusHome">Not Saved</b>
+</div>
+<div class="status">
+Applications: <b id="jobCount">0</b>
+</div>
+<button onclick="show('profile')">Open My Profile</button>
+</div>
+
+<div class="card">
+<h2>Important</h2>
+<p>Automatic submission is disabled. You will always control the final submission.</p>
+</div>
+</section>
+
+<section id="profile" class="hidden">
+<div class="card">
+<h2>Candidate Profile</h2>
+
+<label>Full Name *</label>
 <input id="name" placeholder="Full Name">
+
+<label>Father Name</label>
 <input id="father" placeholder="Father Name">
+
+<label>Mother Name</label>
+<input id="mother" placeholder="Mother Name">
+
+<label>Date of Birth *</label>
 <input id="dob" type="date">
-<input id="mobile" placeholder="Mobile Number">
+
+<label>Mobile Number *</label>
+<input id="mobile" type="tel" maxlength="10" placeholder="Mobile Number">
+
+<label>Email</label>
 <input id="email" type="email" placeholder="Email">
-<input id="category" placeholder="Category">
-<input id="qualification" placeholder="Qualification">
-<button onclick="save()">Save / Update Profile</button>
-<p id="status">Checking saved profile...</p>
+
+<label>Gender</label>
+<select id="gender">
+<option value="">Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<label>Category</label>
+<select id="category">
+<option value="">Select Category</option>
+<option>General</option>
+<option>SC</option>
+<option>ST</option>
+<option>OBC</option>
+<option>EWS</option>
+<option>Other</option>
+</select>
+
+<label>Qualification</label>
+<select id="qualification">
+<option value="">Select Qualification</option>
+<option>10th</option>
+<option>12th</option>
+<option>ITI</option>
+<option>Diploma</option>
+<option>Graduation</option>
+<option>Post Graduation</option>
+</select>
+
+<label>State</label>
+<input id="state" placeholder="State">
+
+<label>District</label>
+<input id="district" placeholder="District">
+
+<label>Address</label>
+<textarea id="address" placeholder="Full Address"></textarea>
+
+<button class="green" onclick="saveProfile()">SAVE PROFILE</button>
+<button class="gray" onclick="loadProfile()">LOAD PROFILE</button>
+
+<p id="saveStatus" class="status">Profile not saved.</p>
+</div>
+</section>
+
+<section id="documents" class="hidden">
+<div class="card">
+<h2>Document Manager</h2>
+<p>Select documents for reference. Files are not uploaded to a server in this version.</p>
+
+<label>Photo</label>
+<input type="file" id="photo" accept="image/*">
+
+<label>Signature</label>
+<input type="file" id="signature" accept="image/*">
+
+<label>10th Marksheet</label>
+<input type="file" id="marks10" accept="image/*,.pdf">
+
+<label>12th Marksheet</label>
+<input type="file" id="marks12" accept="image/*,.pdf">
+
+<label>Category Certificate</label>
+<input type="file" id="certificate" accept="image/*,.pdf">
+
+<p id="docStatus" class="status">No documents selected.</p>
+</div>
+</section>
+
+<section id="jobs" class="hidden">
+<div class="card">
+<h2>Government Job Tracker</h2>
+
+<label>Department</label>
+<select id="jobType">
+<option value="">Select Job</option>
+<option>SSC</option>
+<option>Railway</option>
+<option>Punjab Police</option>
+<option>Punjab Government</option>
+<option>UPSC</option>
+<option>Army</option>
+<option>Banking</option>
+<option>Other</option>
+</select>
+
+<label>Post Name</label>
+<input id="post" placeholder="Post Name">
+
+<label>Last Date</label>
+<input id="lastDate" type="date">
+
+<label>Official Website</label>
+<input id="jobUrl" type="url" placeholder="Official URL">
+
+<button onclick="addJob()">ADD JOB</button>
+<p id="jobStatus" class="status"></p>
+<div id="jobList"></div>
 </div>
 
 <div class="card">
-<h3>Upload Documents</h3>
-<input type="file" id="documents" multiple>
-<p id="files">No files selected</p>
+<h2>Form Details Preview</h2>
+<input id="formJob" placeholder="Job Name">
+<button onclick="prepareForm()">PREPARE DETAILS</button>
+<pre id="preview">No details prepared.</pre>
+<button onclick="copyPreview()">COPY DETAILS</button>
 </div>
+</section>
 
+<section id="backup" class="hidden">
 <div class="card">
-<h3>Government Job Form</h3>
-<input id="job" placeholder="Enter Job Name">
-<button onclick="prepare()">Prepare Details</button>
-<pre id="result"></pre>
+<h2>Backup & Restore</h2>
+<button onclick="downloadBackup()">DOWNLOAD BACKUP</button>
+<label>Restore Backup</label>
+<input type="file" id="restoreFile" accept=".json">
+<button onclick="restoreBackup()">RESTORE BACKUP</button>
+<p id="backupStatus" class="status"></p>
+</div>
+</section>
+
 </div>
 
-<div class="card">
-<h3>Final Submission Control</h3>
-<p>Automatic submission: OFF</p>
-<button disabled>Auto Submit Disabled</button>
-</div>
-
-<script>
-const ids=["name","father","dob","mobile","email","category","qualification"];
-const KEY="candidateProfile";
-
-function save(){
- try{
-  let data={};
-  ids.forEach(id=>{
-   data[id]=document.getElementById(id).value;
-  });
-  localStorage.setItem(KEY,JSON.stringify(data));
-
-  let check=localStorage.getItem(KEY);
-  if(!check) throw new Error("Save verification failed");
-
-  document.getElementById("status").textContent="Profile saved successfully!";
- }catch(error){
-  document.getElementById("status").textContent=
-  "Save error: "+error.message;
- }
-}
-
-function load(){
- try{
-  const saved=localStorage.getItem(KEY);
-  if(!saved){
-   document.getElementById("status").textContent="Profile not saved yet";
-   return;
-  }
-
-  const data=JSON.parse(saved);
-  ids.forEach(id=>{
-   document.getElementById(id).value=data[id]||"";
-  });
-
-  document.getElementById("status").textContent="Saved profile loaded!";
- }catch(error){
-  document.getElementById("status").textContent=
-  "Load error: "+error.message;
- }
-}
-
-function prepare(){
- let data={};
- ids.forEach(id=>{
-  data[id]=document.getElementById(id).value;
- });
- document.getElementById("result").textContent=
- JSON.stringify({job:document.getElementById("job").value,details:data},null,2);
-}
-
-document.getElementById("documents").onchange=function(){
- document.getElementById("files").textContent=
- this.files.length+" files selected (not uploaded or saved)";
-};
-
-load();
-</script>
+<footer>Govt Job AutoFill Pro • Manual Submission Only</footer>
 </body>
 </html>
