@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Govt Job AutoFill Pro</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  margin: 0;
+  padding: 20px;
+}
+header {
+  background: #123b70;
+  color: white;
+  padding: 22px;
+  border-radius: 12px;
+  text-align: center;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin-top: 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+}
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 9px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+input { border: 1px solid #ccc; }
+button {
+  background: #123b70;
+  color: white;
+  border: 0;
+  font-size: 16px;
+}
+small { color: #555; }
+</style>
+</head>
+<body>
+
+<header>
+<h2>Govt Job AutoFill Pro</h2>
+<p>Your Documents • Your Control</p>
+</header>
+
+<div class="card">
+<h3>Candidate Profile</h3>
+<input id="name" placeholder="Candidate Name">
+<input id="father" placeholder="Father Name">
+<input id="dob" type="date">
+<input id="mobile" placeholder="Mobile Number">
+<input id="email" type="email" placeholder="Email">
+<input id="category" placeholder="Category">
+<input id="qualification" placeholder="Qualification">
+
+<button onclick="saveProfile()">Save Profile</button>
+<small id="status">Profile not saved</small>
+</div>
+
+<div class="card">
+<h3>Upload Documents</h3>
+<input type="file" id="documents" multiple>
+<p id="files">No documents selected</p>
+</div>
+
+<div class="card">
+<h3>Job Form Assistant</h3>
+<input id="job" placeholder="Job Name (SSC, Railway, Punjab Police)">
+<button onclick="prepare()">Prepare Form Details</button>
+<p id="result">Your details will appear here.</p>
+</div>
+
+<div class="card">
+<h3>Final Control</h3>
+<p>Automatic submission is disabled.</p>
+<button disabled>Auto Submit OFF</button>
+</div>
+
+<script>
+function saveProfile() {
+ const fields = [
+  "name","father","dob","mobile",
+  "email","category","qualification"
+ ];
+ const data = {};
+ fields.forEach(id => {
+  data[id] = document.getElementById(id).value;
+ });
+ localStorage.setItem("candidateProfile",JSON.stringify(data));
+ document.getElementById("status").innerText =
+ "Profile saved on this device!";
+}
+
+function prepare() {
+ const fields = [
+  "name","father","dob","mobile",
+  "email","category","qualification"
+ ];
+ const data = {};
+ fields.forEach(id => {
+  data[id] = document.getElementById(id).value;
+ });
+ document.getElementById("result").innerText =
+ JSON.stringify(data,null,2);
+}
+
+document.getElementById("documents").onchange = function() {
+ document.getElementById("files").innerText =
+ this.files.length + " documents selected";
+};
+</script>
+
+</body>
+</html>
