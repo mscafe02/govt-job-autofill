@@ -280,5 +280,119 @@ Applications: <b id="jobCount">0</b>
 </div>
 
 <footer>Govt Job AutoFill Pro • Manual Submission Only</footer>
-</body>
-</html>
+
+<script>
+// PAGE NAVIGATION
+function show(page){
+ document.querySelectorAll("section").forEach(s=>{
+  s.classList.add("hidden");
+ });
+ document.getElementById(page).classList.remove("hidden");
+}
+
+// PROFILE SAVE
+function saveProfile(){
+ const ids=[
+ "name","father","mother","dob","mobile","email",
+ "gender","category","qualification","state",
+ "district","address"
+ ];
+
+ let profile={};
+
+ ids.forEach(id=>{
+  profile[id]=document.getElementById(id).value;
+ });
+
+ if(!profile.name || !profile.dob || !profile.mobile){
+  alert("Please fill Name, DOB and Mobile Number");
+  return;
+ }
+
+ localStorage.setItem("candidateProfile",JSON.stringify(profile));
+
+ document.getElementById("saveStatus").innerText="Profile Saved Successfully!";
+ document.getElementById("saveStatus").className="status success";
+
+ document.getElementById("profileStatusHome").innerText="Saved";
+}
+
+// PROFILE LOAD
+function loadProfile(){
+ const data=localStorage.getItem("candidateProfile");
+
+ if(!data){
+  alert("No Saved Profile Found");
+  return;
+ }
+
+ const profile=JSON.parse(data);
+
+ Object.keys(profile).forEach(id=>{
+  if(document.getElementById(id)){
+   document.getElementById(id).value=profile[id];
+  }
+ });
+
+ alert("Profile Loaded Successfully");
+}
+
+// JOB TRACKER
+function addJob(){
+ const type=document.getElementById("jobType").value;
+ const post=document.getElementById("post").value;
+ const date=document.getElementById("lastDate").value;
+ const url=document.getElementById("jobUrl").value;
+
+ if(!type || !post){
+  alert("Please select Department and Post Name");
+  return;
+ }
+
+ let jobs=JSON.parse(localStorage.getItem("jobs")||"[]");
+
+ jobs.push({
+  id:Date.now(),
+  type,
+  post,
+  date,
+  url
+ });
+
+ localStorage.setItem("jobs",JSON.stringify(jobs));
+
+ document.getElementById("jobStatus").innerText="Job Added Successfully!";
+ document.getElementById("post").value="";
+ document.getElementById("lastDate").value="";
+ document.getElementById("jobUrl").value="";
+
+ displayJobs();
+}
+
+// DISPLAY JOBS
+function displayJobs(){
+ const jobs=JSON.parse(localStorage.getItem("jobs")||"[]");
+ const list=document.getElementById("jobList");
+
+ list.innerHTML="";
+
+ jobs.forEach(job=>{
+  const div=document.createElement("div");
+  div.className="job";
+
+  const heading=document.createElement("h3");
+  heading.textContent=job.post;
+
+  const department=document.createElement("p");
+  department.textContent="Department: "+job.type;
+
+  const deadline=document.createElement("p");
+  deadline.textContent="Last Date: "+(job.date||"Not Added");
+
+  div.append(heading,department,deadline);
+
+  if(job.url){
+   const link=document.createElement("a");
+   link.href=job.url;
+   link.target="_blank";
+   link.rel="</body>
