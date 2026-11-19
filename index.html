@@ -31,7 +31,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere}
 <input id="category" placeholder="Category">
 <input id="qualification" placeholder="Qualification">
 <button onclick="save()">Save / Update Profile</button>
-<p id="status">Profile not saved</p>
+<p id="status">Checking saved profile...</p>
 </div>
 
 <div class="card">
@@ -55,30 +55,57 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere}
 
 <script>
 const ids=["name","father","dob","mobile","email","category","qualification"];
+const KEY="candidateProfile";
 
 function save(){
- let data={};
- ids.forEach(id=>data[id]=document.getElementById(id).value);
- localStorage.setItem("candidateProfile",JSON.stringify(data));
- document.getElementById("status").innerText="Profile saved successfully!";
+ try{
+  let data={};
+  ids.forEach(id=>{
+   data[id]=document.getElementById(id).value;
+  });
+  localStorage.setItem(KEY,JSON.stringify(data));
+
+  let check=localStorage.getItem(KEY);
+  if(!check) throw new Error("Save verification failed");
+
+  document.getElementById("status").textContent="Profile saved successfully!";
+ }catch(error){
+  document.getElementById("status").textContent=
+  "Save error: "+error.message;
+ }
 }
 
 function load(){
- let data=JSON.parse(localStorage.getItem("candidateProfile")||"{}");
- ids.forEach(id=>{
- document.getElementById(id).value=data[id]||"";
- });
+ try{
+  const saved=localStorage.getItem(KEY);
+  if(!saved){
+   document.getElementById("status").textContent="Profile not saved yet";
+   return;
+  }
+
+  const data=JSON.parse(saved);
+  ids.forEach(id=>{
+   document.getElementById(id).value=data[id]||"";
+  });
+
+  document.getElementById("status").textContent="Saved profile loaded!";
+ }catch(error){
+  document.getElementById("status").textContent=
+  "Load error: "+error.message;
+ }
 }
 
 function prepare(){
  let data={};
- ids.forEach(id=>data[id]=document.getElementById(id).value);
+ ids.forEach(id=>{
+  data[id]=document.getElementById(id).value;
+ });
  document.getElementById("result").textContent=
  JSON.stringify({job:document.getElementById("job").value,details:data},null,2);
 }
 
 document.getElementById("documents").onchange=function(){
- document.getElementById("files").innerText=
+ document.getElementById("files").textContent=
  this.files.length+" files selected (not uploaded or saved)";
 };
 
